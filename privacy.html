@@ -3,24 +3,120 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0a0910" />
+    <meta name="description" content="Privacy and data-use notice for the Sift Chrome extension public beta." />
+    <meta name="theme-color" content="#f4f4ef" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; base-uri 'none'; form-action 'none'" />
-    <title>Privacy summary | Sift</title>
+    <title>Privacy | Sift</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=3" />
   </head>
   <body>
-    <main class="privacy-page">
-      <a class="back-link" href="index.html">← Back to Sift</a>
-      <p class="eyebrow">Private beta privacy summary</p>
-      <h1>What Sift reads and what it does not.</h1>
-      <p class="lead">Sift needs information from the current supported video page to estimate whether that video may be AI-generated. It is designed to avoid collecting a general browsing history.</p>
+    <div class="privacy-shell">
+      <header class="privacy-header">
+        <a class="brand" href="index.html" aria-label="Sift home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+          <span>Sift</span>
+        </a>
+        <a class="back-link" href="index.html">Back to download page</a>
+      </header>
 
-      <section><h2>Read on supported pages</h2><ul><li>Video and creator identifiers</li><li>Visible titles, captions, descriptions, hashtags, and platform labels</li><li>Low-resolution video corner samples when optional local watermark matching is enabled</li></ul></section>
-      <section><h2>Sent through the hosted beta</h2><ul><li>Video identifiers and compact extracted signal summaries</li><li>Anonymous votes and classification disputes</li><li>A random installation identifier that is pseudonymized before database storage</li><li>Normal connection data that reaches the API infrastructure for delivery and abuse prevention</li></ul></section>
-      <section><h2>Not uploaded by this beta</h2><ul><li>Full videos, video frames, audio, or screenshots</li><li>Raw titles, captions, or descriptions</li><li>Unrelated browsing history, personal messages, or account passwords</li></ul></section>
-      <section><h2>Local mode</h2><p>You can clear the API base URL in Sift settings to keep classifications and feedback in Chrome local storage on your device. Shared community classifications will not be available in that mode.</p></section>
-      <section><h2>Beta status</h2><p>This is a product summary for a private beta, not a final public legal policy. The operator must add contact details, retention periods, jurisdiction-specific rights, and a complete privacy policy before a Chrome Web Store launch.</p><p>Questions can be raised through the <a href="https://github.com/n3try/sift-ai-video-filter-site/issues">public GitHub issue tracker</a>.</p></section>
-    </main>
+      <main>
+        <section class="privacy-hero">
+          <p class="section-label">Privacy and data use</p>
+          <h1>What Sift reads, sends, and stores.</h1>
+          <p class="lead">Sift processes information needed to evaluate supported YouTube and TikTok pages, return shared classifications, and record feedback. Full videos, audio, screenshots, and unrelated browsing history are not uploaded.</p>
+          <p class="policy-meta"><span><strong>Effective:</strong> July 15, 2026</span><span><strong>Applies to:</strong> Public beta 0.3.2</span><span><strong>Maintainer:</strong> n3try</span></p>
+        </section>
+
+        <section class="privacy-summary" aria-label="Privacy summary">
+          <div><span>Full video uploads</span><strong>None</strong></div>
+          <div><span>Hosted service</span><strong>Optional</strong></div>
+          <div><span>Installation identity</span><strong>Random and pseudonymous</strong></div>
+        </section>
+
+        <div class="privacy-layout">
+          <nav class="privacy-toc" aria-label="Privacy sections">
+            <p>On this page</p>
+            <a href="#scope">Scope</a>
+            <a href="#information">Information</a>
+            <a href="#use">How it is used</a>
+            <a href="#providers">Providers</a>
+            <a href="#retention">Retention</a>
+            <a href="#controls">Your controls</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <div class="privacy-content">
+            <section class="policy-section" id="scope">
+              <h2>1. Scope</h2>
+              <p>This notice applies to Sift public beta version 0.3.2 and its hosted classification service. Sift runs on supported YouTube and TikTok pages. It is designed to avoid collecting a general browsing history.</p>
+              <p>Sift identifies possible production signals. It does not determine whether a video is truthful, harmful, or appropriate.</p>
+            </section>
+
+            <section class="policy-section" id="information">
+              <h2>2. Information Sift handles</h2>
+              <h3>Read on supported pages</h3>
+              <ul>
+                <li>Video and creator identifiers.</li>
+                <li>Visible titles, captions, descriptions, hashtags, and platform labels.</li>
+                <li>Low-resolution corner samples when optional local watermark matching is enabled. These samples stay in the browser.</li>
+              </ul>
+              <h3>Sent in hosted mode</h3>
+              <ul>
+                <li>Video identifiers and compact summaries of detected signals.</li>
+                <li>AI, human, unsure, and dispute feedback.</li>
+                <li>A pseudonymous installation key derived from a random identifier stored by the extension.</li>
+                <li>Normal network information received by the API infrastructure for delivery, security, and abuse prevention.</li>
+              </ul>
+              <h3>Not uploaded by this beta</h3>
+              <ul>
+                <li>Full videos, sampled video frames, audio, or screenshots.</li>
+                <li>Raw titles, captions, or descriptions.</li>
+                <li>Unrelated browsing history, personal messages, or passwords.</li>
+              </ul>
+            </section>
+
+            <section class="policy-section" id="use">
+              <h2>3. How information is used</h2>
+              <p>Sift uses the information above to return classifications, explain which signals contributed to a result, aggregate viewer feedback, prevent repeated abuse, and maintain the reliability of the beta service.</p>
+              <p>Sift does not sell personal information or use extension data for advertising.</p>
+            </section>
+
+            <section class="policy-section" id="providers">
+              <h2>4. Service providers</h2>
+              <p>The hosted beta uses Cloudflare Workers and Hyperdrive to receive and route API requests, and Neon to operate the PostgreSQL database. These providers process information as needed to run their infrastructure and may receive normal connection data under their own service terms.</p>
+              <p>The database stores pseudonymous observer values rather than raw IP addresses. Cloudflare still receives IP and connection information when it serves a request.</p>
+            </section>
+
+            <section class="policy-section" id="retention">
+              <h2>5. Retention and deletion</h2>
+              <p>Local settings remain in Chrome until you clear the extension data or remove Sift. Shared signal summaries and feedback may remain in the beta database while they are needed for classifications, abuse prevention, or service testing.</p>
+              <div class="policy-callout">
+                <strong>Beta limitation</strong>
+                <p>A fixed server-retention schedule is not yet published. If you require a guaranteed deletion period, clear the API URL in Sift settings and use local mode instead of the hosted beta.</p>
+              </div>
+              <p>Infrastructure logs are controlled by the applicable Cloudflare and Neon service settings and retention practices.</p>
+            </section>
+
+            <section class="policy-section" id="controls">
+              <h2>6. Your controls</h2>
+              <ul>
+                <li>Disable Sift at any time from <code>chrome://extensions</code>.</li>
+                <li>Clear the API base URL in Sift settings to keep classifications and feedback on your device. Shared classifications will not be available in local mode.</li>
+                <li>Remove the extension or clear its storage to delete locally stored settings and identifiers.</li>
+                <li>Contact the maintainer to ask about hosted data or deletion. Server-side requests may require enough information to locate the pseudonymous record.</li>
+              </ul>
+            </section>
+
+            <section class="policy-section" id="contact">
+              <h2>7. Contact and changes</h2>
+              <p>Sift is maintained through the <a href="https://github.com/n3try">n3try GitHub account</a>. General questions and data requests can begin through the <a href="https://github.com/n3try/sift-ai-video-filter-site/issues">public support tracker</a>. Do not post installation identifiers or other private information in a public issue. Open a minimal issue to arrange a safer follow-up channel.</p>
+              <p>Security reports can be submitted privately through <a href="https://github.com/n3try/sift-ai-video-filter-site/security/advisories/new">GitHub private vulnerability reporting</a>.</p>
+              <p>This notice applies to the current public beta. Material changes will be recorded here with a new effective date.</p>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
   </body>
 </html>
