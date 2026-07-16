@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Download the Sift private beta Chrome extension and install it with Chrome developer mode." />
+    <meta name="theme-color" content="#0a0910" />
+    <meta property="og:title" content="Sift: AI Video Filter" />
+    <meta property="og:description" content="See an evidence-based AI likelihood estimate on YouTube and TikTok videos." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://n3try.github.io/sift-ai-video-filter-site/" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'" />
+    <title>Sift: AI Video Filter</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-glow glow-one"></div>
+    <div class="page-glow glow-two"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Sift home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M15 4h2v4h-2z"/><circle cx="16" cy="4" r="2"/><rect x="5" y="8" width="22" height="18" rx="6"/><circle class="eye" cx="12" cy="15" r="2.2"/><circle class="eye" cx="20" cy="15" r="2.2"/><path class="mouth" d="M11.5 21c2.8 2 6.2 2 9 0"/></svg>
+        </span>
+        <span>Sift</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#install">Install</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="header-download" href="downloads/sift-extension-latest.zip" download="sift-extension-v0.3.2.zip">Download beta</a>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <div class="status-pill"><span></span>Private beta, version 0.3.2</div>
+          <h1>A clearer signal when a video might be AI.</h1>
+          <p class="hero-lead">Sift adds an evidence-based AI likelihood estimate to YouTube and TikTok, then lets viewers contribute feedback when the estimate gets it wrong.</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="downloads/sift-extension-latest.zip" download="sift-extension-v0.3.2.zip">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 20h14"/></svg>
+              Download for Chrome
+            </a>
+            <a class="secondary-button" href="#install">Installation steps</a>
+          </div>
+          <p class="download-meta">ZIP file, 105.2 KB <span>•</span> Chrome 120+ <span>•</span> Windows, macOS, and Linux</p>
+          <div class="honesty-note">
+            <strong>No fake one-click install.</strong>
+            <span>Chrome blocks extensions installed directly from third-party websites. Until Sift reaches the Chrome Web Store, installation requires developer mode.</span>
+          </div>
+        </div>
+
+        <div class="product-visual" aria-label="Preview of Sift on a video page">
+          <div class="browser-frame">
+            <div class="browser-top">
+              <div class="browser-dots"><span></span><span></span><span></span></div>
+              <div class="address-bar"><span class="lock-dot"></span>tiktok.com/foryou</div>
+              <div class="browser-menu">•••</div>
+            </div>
+            <div class="video-preview">
+              <div class="scene-orb orb-a"></div>
+              <div class="scene-orb orb-b"></div>
+              <div class="scene-grid"></div>
+              <div class="video-copy"><span>@future.frames</span><strong>A city built from a prompt</strong><small>#veo3 #aivideo</small></div>
+              <div class="action-rail" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <div class="sift-control">
+                <span class="robot-mini"><svg viewBox="0 0 32 32"><path d="M15 4h2v4h-2z"/><circle cx="16" cy="4" r="2"/><rect x="5" y="8" width="22" height="18" rx="6"/><circle class="eye" cx="12" cy="15" r="2.2"/><circle class="eye" cx="20" cy="15" r="2.2"/><path class="mouth" d="M11.5 21c2.8 2 6.2 2 9 0"/></svg></span>
+                <b>91%</b>
+              </div>
+              <div class="estimate-card">
+                <p>Sift estimate</p>
+                <h2>Likely AI <span>91% AI</span></h2>
+                <ul>
+                  <li>Platform AI label detected</li>
+                  <li>Generator named in caption</li>
+                  <li>Community leans AI</li>
+                </ul>
+                <div><button type="button" tabindex="-1">AI</button><button type="button" tabindex="-1">Human</button><button type="button" tabindex="-1">Unsure</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="visual-caption"><span class="pulse-dot"></span>Visible on the current video, never silently hidden</div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="Sift principles">
+        <div><strong>Evidence, not magic</strong><span>Reasons are shown with every usable estimate.</span></div>
+        <div><strong>Conservative by default</strong><span>Weak evidence displays “No score” instead of a fake percentage.</span></div>
+        <div><strong>Privacy conscious</strong><span>Video frames are not uploaded by this beta.</span></div>
+      </section>
+
+      <section class="section" id="how-it-works">
+        <div class="section-heading">
+          <p class="eyebrow">How it works</p>
+          <h2>Multiple signals, one explainable estimate.</h2>
+          <p>Sift does not claim it can magically identify every synthetic video. It combines signals that can be checked and tells you when the evidence is too weak.</p>
+        </div>
+        <div class="signal-grid">
+          <article><span>01</span><h3>Platform labels</h3><p>YouTube and TikTok AI or provenance labels are strong signals, but they are not treated as infallible.</p></article>
+          <article><span>02</span><h3>Creator disclosures</h3><p>Captions, descriptions, hashtags, and named generation tools contribute to the estimate.</p></article>
+          <article><span>03</span><h3>Local watermark checks</h3><p>Optional low-resolution corner checks run in your browser. Frames are not sent to the Sift API.</p></article>
+          <article><span>04</span><h3>Community feedback</h3><p>AI, human, and unsure votes help correct weak or disputed classifications over time.</p></article>
+        </div>
+      </section>
+
+      <section class="section install-section" id="install">
+        <div class="section-heading compact">
+          <p class="eyebrow">Install the private beta</p>
+          <h2>Four steps, about two minutes.</h2>
+          <p>You only need to do this because the extension is not in the Chrome Web Store yet.</p>
+        </div>
+        <div class="steps">
+          <article><span class="step-number">1</span><div><h3>Download the ZIP</h3><p>Use the download button below. Chrome may ask whether you want to keep the file.</p></div></article>
+          <article><span class="step-number">2</span><div><h3>Extract the folder</h3><p>Open the ZIP and extract <code>Sift-v0.3.2</code>. Do not select the ZIP itself in Chrome.</p></div></article>
+          <article><span class="step-number">3</span><div><h3>Enable developer mode</h3><p>Open <code>chrome://extensions</code>, then turn on <strong>Developer mode</strong> in the upper-right corner.</p></div></article>
+          <article><span class="step-number">4</span><div><h3>Choose Load unpacked</h3><p>Select the extracted <code>Sift-v0.3.2</code> folder containing <code>manifest.json</code>, then refresh YouTube or TikTok.</p></div></article>
+        </div>
+        <div class="download-panel">
+          <div>
+            <span class="file-icon">ZIP</span>
+            <div><strong>Sift for Chrome, v0.3.2</strong><small>Private beta build, 105.2 KB</small></div>
+          </div>
+          <div class="download-panel-actions">
+            <a class="primary-button" href="downloads/sift-extension-latest.zip" download="sift-extension-v0.3.2.zip">Download ZIP</a>
+            <a class="text-link" href="https://raw.githubusercontent.com/n3try/sift-ai-video-filter-site/main/downloads/sift-extension-v0.3.2.zip">Raw GitHub file</a>
+          </div>
+        </div>
+        <p class="keep-folder"><strong>Keep the extracted folder.</strong> Chrome loads the extension from that location. Moving or deleting it will break future reloads.</p>
+      </section>
+
+      <section class="section safety-section">
+        <div>
+          <p class="eyebrow">Verify your download</p>
+          <h2>The exact build is checksummed.</h2>
+          <p>Advanced users can compare the downloaded ZIP against this SHA-256 checksum.</p>
+        </div>
+        <div class="checksum-card">
+          <code id="checksum">b63ae9726a4068fa0d659949040f4f74b6b2ee147acc9353212f5e5227133f13</code>
+          <button id="copy-checksum" type="button">Copy checksum</button>
+          <span id="copy-status" role="status" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <section class="section faq-section" id="faq">
+        <div class="section-heading compact">
+          <p class="eyebrow">Questions</p>
+          <h2>Before you install.</h2>
+        </div>
+        <div class="faq-list">
+          <details><summary>Why can’t the button install Sift automatically?</summary><p>Chrome blocks direct third-party extension installation for normal users. A genuine one-click install requires publishing through the Chrome Web Store. Any random site claiming it can bypass that safely is misleading you.</p></details>
+          <details><summary>Does “Likely AI” mean the video is definitely fake?</summary><p>No. Sift reports an estimate based on available evidence. Platform labels can be wrong, disclosures can be missing, and community votes can disagree. Treat the score as a warning signal, not proof.</p></details>
+          <details><summary>How do beta updates work?</summary><p>Updates are manual for now. Download the newer ZIP, extract it over a stable folder, then click Reload for Sift on <code>chrome://extensions</code>. Chrome Web Store distribution will enable automatic updates later.</p></details>
+          <details><summary>What information leaves my browser?</summary><p>The hosted beta receives video identifiers, compact classification signals, and anonymous feedback. It does not receive full videos, audio, screenshots, or sampled video frames. See the <a href="privacy.html">beta privacy summary</a>.</p></details>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div><p class="eyebrow">Try the private beta</p><h2>Make the AI signal visible.</h2><p>Install Sift, test it on real feeds, and report the classifications it gets wrong.</p></div>
+        <a class="primary-button" href="downloads/sift-extension-latest.zip" download="sift-extension-v0.3.2.zip">Download Sift v0.3.2</a>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="#top"><span class="brand-mark small" aria-hidden="true">S</span><span>Sift</span></a>
+      <p>Confidence, not certainty.</p>
+      <div><a href="privacy.html">Privacy</a><a href="https://github.com/n3try/sift-ai-video-filter-site">GitHub</a></div>
+    </footer>
+  </body>
+</html>

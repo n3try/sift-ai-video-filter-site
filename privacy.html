@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0910" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; base-uri 'none'; form-action 'none'" />
+    <title>Privacy summary | Sift</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="privacy-page">
+      <a class="back-link" href="index.html">← Back to Sift</a>
+      <p class="eyebrow">Private beta privacy summary</p>
+      <h1>What Sift reads and what it does not.</h1>
+      <p class="lead">Sift needs information from the current supported video page to estimate whether that video may be AI-generated. It is designed to avoid collecting a general browsing history.</p>
+
+      <section><h2>Read on supported pages</h2><ul><li>Video and creator identifiers</li><li>Visible titles, captions, descriptions, hashtags, and platform labels</li><li>Low-resolution video corner samples when optional local watermark matching is enabled</li></ul></section>
+      <section><h2>Sent through the hosted beta</h2><ul><li>Video identifiers and compact extracted signal summaries</li><li>Anonymous votes and classification disputes</li><li>A random installation identifier that is pseudonymized before database storage</li><li>Normal connection data that reaches the API infrastructure for delivery and abuse prevention</li></ul></section>
+      <section><h2>Not uploaded by this beta</h2><ul><li>Full videos, video frames, audio, or screenshots</li><li>Raw titles, captions, or descriptions</li><li>Unrelated browsing history, personal messages, or account passwords</li></ul></section>
+      <section><h2>Local mode</h2><p>You can clear the API base URL in Sift settings to keep classifications and feedback in Chrome local storage on your device. Shared community classifications will not be available in that mode.</p></section>
+      <section><h2>Beta status</h2><p>This is a product summary for a private beta, not a final public legal policy. The operator must add contact details, retention periods, jurisdiction-specific rights, and a complete privacy policy before a Chrome Web Store launch.</p><p>Questions can be raised through the <a href="https://github.com/n3try/sift-ai-video-filter-site/issues">public GitHub issue tracker</a>.</p></section>
+    </main>
+  </body>
+</html>
