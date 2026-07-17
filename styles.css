@@ -96,6 +96,16 @@ code {
   border: 0;
 }
 
+.clipboard-fallback {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 main[tabindex="-1"]:focus {
   outline: none;
 }
@@ -483,10 +493,12 @@ h1 {
 
 .evidence-list {
   margin: 0 22px;
+  padding: 0;
   border-top: 1px solid var(--line-dark);
+  list-style: none;
 }
 
-.evidence-list > div {
+.evidence-list > li {
   min-height: 70px;
   display: grid;
   grid-template-columns: 28px 1fr auto;
@@ -1547,7 +1559,7 @@ h1 {
     border-left: 0;
   }
 
-  .evidence-list > div {
+  .evidence-list > li {
     grid-template-columns: 25px 1fr;
     padding: 15px 0;
   }

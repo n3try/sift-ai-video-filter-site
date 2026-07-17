@@ -39,7 +39,7 @@
 
         <section class="privacy-summary" aria-label="Accessibility summary">
           <div><span>Automated source checks</span><strong>Passing</strong></div>
-          <div><span>Limited browser checks</span><strong>Passing</strong></div>
+          <div><span>Rendered browser checks</span><strong>Still required</strong></div>
           <div><span>Assistive technology audit</span><strong>Still required</strong></div>
         </section>
 
@@ -76,10 +76,10 @@
             <section class="policy-section" id="testing">
               <h2>3. Testing completed</h2>
               <p>The project source checker currently passes all published pages. It checks page structure, accessible names, label matching, table headers, fragment targets, focus treatment, reduced motion, responsive rules, selected color-contrast pairs, persistent status messages, and keyboard support for the permissions table.</p>
-              <p>Limited browser checks have also confirmed the skip link, focus movement, accessible control names, persistent copy confirmation, narrow-screen page reflow, and wrapping of the SHA-256 checksum.</p>
+              <p>The current automated gate does not render these pages or exercise their JavaScript in a browser. Browser results will not be treated as release evidence until the browser, version, operating system, date, and findings are recorded.</p>
               <div class="policy-callout">
                 <strong>What this does not prove</strong>
-                <p>A passing automated or limited browser check does not prove that every user can complete every task with assistive technology.</p>
+                <p>A passing automated source check does not prove that every user can complete every task with assistive technology.</p>
               </div>
             </section>
 

@@ -15,7 +15,7 @@ Only the current versioned ZIP and its byte-identical `latest` alias belong in `
 
 ## Accessibility checks
 
-Run `npm run check` before publishing. The dependency-free check covers page landmarks, skip links and targets, headings, accessible names, visible-label matching, form and table labels, persistent live status, keyboard scrolling for the narrow permissions table, fragment targets, focus treatment, reduced motion, responsive breakpoints, and the site's key text-color contrast pairs.
+Run `npm ci --ignore-scripts` and `npm run check` before publishing. The gate combines an exactly pinned standards-aware HTML validator with project-specific checks for page landmarks, skip links and targets, headings, valid ARIA naming, accessible names, visible-label matching, form and table labels, persistent live status, keyboard scrolling for the narrow permissions table, fragment targets, focus treatment, reduced motion, responsive breakpoints, and the site's key text-color contrast pairs.
 
 A passing script is not ADA certification or proof of WCAG 2.2 AA conformance. Before publishing a new release, complete keyboard-only navigation, 200% text zoom, 400% page zoom at 320 CSS pixels, Windows forced-colors, NVDA with Chrome, and VoiceOver with Safari. Record the browsers, assistive-technology versions, findings, and fixes.
 

@@ -48,7 +48,7 @@
             <a class="button button-primary" href="downloads/sift-extension-v0.4.3.zip">Download beta (.zip)</a>
             <a class="text-action" href="#install">View installation guide <span aria-hidden="true">&#8595;</span></a>
           </div>
-          <dl class="release-meta" aria-label="Release details">
+          <dl class="release-meta">
             <div><dt>Version</dt><dd>0.4.3</dd></div>
             <div><dt>Released</dt><dd>July 16, 2026</dd></div>
             <div><dt>Requires</dt><dd>Chrome 120+</dd></div>
@@ -72,21 +72,21 @@
               <p>Assessment</p>
               <h2>Likely AI-generated</h2>
             </div>
-            <div class="sample-score" aria-label="AI signal score 82 out of 100">
+            <div class="sample-score">
               <strong>82</strong>
               <span>AI signal score<small>not probability</small></span>
             </div>
           </div>
-          <div class="evidence-list" aria-label="Example evidence">
-            <div><span class="evidence-index">01</span><div><strong>Platform disclosure</strong><small>YouTube label detected on the current video</small></div><span class="evidence-weight">Strong</span></div>
-            <div><span class="evidence-index">02</span><div><strong>Creator disclosure</strong><small>Generation tool named in the description</small></div><span class="evidence-weight">Strong</span></div>
-            <div><span class="evidence-index">03</span><div><strong>Viewer feedback</strong><small>Supporting feedback from other installations</small></div><span class="evidence-weight">Supporting</span></div>
-          </div>
+          <ol class="evidence-list" role="list" aria-label="Example evidence">
+            <li><span class="evidence-index" aria-hidden="true">01</span><div><strong>Platform disclosure</strong><small>YouTube label detected on the current video</small></div><span class="evidence-weight">Strong</span></li>
+            <li><span class="evidence-index" aria-hidden="true">02</span><div><strong>Creator disclosure</strong><small>Generation tool named in the description</small></div><span class="evidence-weight">Strong</span></li>
+            <li><span class="evidence-index" aria-hidden="true">03</span><div><strong>Viewer feedback</strong><small>Supporting feedback from other installations</small></div><span class="evidence-weight">Supporting</span></li>
+          </ol>
           <p class="sample-disclaimer">The AI signal score shows which direction the available signals lean. It is not a probability or proof that a video is synthetic, false, or harmful.</p>
         </figure>
       </section>
 
-      <dl class="fact-bar" aria-label="Product facts">
+      <dl class="fact-bar">
         <div><dt>Supported feeds</dt><dd>YouTube and TikTok</dd></div>
         <div><dt>Full video uploads</dt><dd>None</dd></div>
         <div><dt>Distribution</dt><dd>Manual beta install</dd></div>
@@ -166,9 +166,9 @@
           </dl>
           <a class="button button-primary full-width" href="downloads/sift-extension-v0.4.3.zip">Download beta (.zip)</a>
           <a class="release-link" href="https://github.com/n3try/sift-ai-video-filter-site/releases/tag/v0.4.3">View release notes on GitHub</a>
-          <div class="checksum-block">
+          <div class="checksum-block" role="group" aria-labelledby="checksum-label">
             <div><span id="checksum-label">SHA-256</span><button id="copy-checksum" type="button" aria-label="Copy SHA-256 checksum">Copy</button></div>
-            <code id="checksum" class="checksum-value" aria-labelledby="checksum-label">f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6</code>
+            <code id="checksum" class="checksum-value">f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6</code>
             <p id="copy-status" role="status" aria-live="polite"></p>
           </div>
           <details class="advanced-downloads">

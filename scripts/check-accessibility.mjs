@@ -5,6 +5,8 @@ import { hasUnsupportedConformanceClaim } from "./accessibility-policy.mjs";
 const root = resolve(import.meta.dirname, "..");
 const pageNames = ["index.html", "privacy.html", "terms.html", "accessibility.html", "404.html"];
 const failures = [];
+const INTERACTIVE_CSP = "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'";
+const STATIC_CSP = "default-src 'self'; style-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'";
 
 function fail(file, message) {
   failures.push(`${file}: ${message}`);
@@ -62,6 +64,11 @@ function checkPage(pageName) {
   if (!/<html\b[^>]*\blang="[^"]+"/i.test(html)) fail(pageName, "html element needs a language");
   if (!/<meta\b[^>]*\bname="viewport"/i.test(html)) fail(pageName, "missing responsive viewport metadata");
   if (!/<meta\b[^>]*\bname="referrer"[^>]*\bcontent="no-referrer"/i.test(html)) fail(pageName, "missing no-referrer privacy policy");
+  const csp = openingTags(html, "meta").find((attributes) => (
+    attributes.get("http-equiv")?.toLowerCase() === "content-security-policy"
+  ))?.get("content");
+  const expectedCsp = pageName === "404.html" ? STATIC_CSP : INTERACTIVE_CSP;
+  if (csp !== expectedCsp) fail(pageName, "content security policy is missing or broader than the approved policy");
   if (elements(html, "title").filter((title) => plainText(title.content)).length !== 1) {
     fail(pageName, "needs exactly one nonempty title");
   }
@@ -199,6 +206,9 @@ function checkStyles() {
 
 function checkBehavior() {
   const javascript = readFileSync(resolve(root, "script.js"), "utf8");
+  if (/\.style(?:\.|\[)/.test(javascript)) {
+    fail("script.js", "inline style mutation is incompatible with the site content security policy");
+  }
   if (!/querySelectorAll\(['"]\.skip-link\[href\^=[^\)]*\)/.test(javascript)) {
     fail("script.js", "missing skip-link event binding");
   }
