@@ -5,33 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Privacy and data-use notice for the Sift Chrome extension public beta." />
     <meta name="theme-color" content="#f4f4ef" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; base-uri 'none'; form-action 'none'" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'" />
     <title>Privacy | Sift</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="script.js?v=5" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <div class="privacy-shell">
       <header class="privacy-header">
         <a class="brand" href="index.html" aria-label="Sift home">
           <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
           <span>Sift</span>
         </a>
-        <a class="back-link" href="index.html">Back to download page</a>
+        <nav class="policy-page-nav" aria-label="Policy navigation">
+          <a href="privacy.html" aria-current="page">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="accessibility.html">Accessibility</a>
+          <a href="index.html">Download</a>
+        </nav>
       </header>
 
-      <main>
+      <main id="main" tabindex="-1">
         <section class="privacy-hero">
           <p class="section-label">Privacy and data use</p>
           <h1>What Sift reads, sends, and stores.</h1>
           <p class="lead">Sift processes information needed to evaluate supported YouTube and TikTok pages, return shared classifications, and record feedback. Full videos, audio, screenshots, and unrelated browsing history are not uploaded.</p>
-          <p class="policy-meta"><span><strong>Effective:</strong> July 16, 2026</span><span><strong>Applies to:</strong> Public beta 0.4.3</span><span><strong>Maintainer:</strong> n3try</span></p>
+          <p class="policy-meta"><span><strong>Effective:</strong> July 17, 2026</span><span><strong>Applies to:</strong> Public beta and forthcoming account service</span><span><strong>Maintainer:</strong> n3try</span></p>
         </section>
 
         <section class="privacy-summary" aria-label="Privacy summary">
           <div><span>Full video uploads</span><strong>None</strong></div>
           <div><span>Hosted service</span><strong>Optional</strong></div>
-          <div><span>Installation identity</span><strong>Random and pseudonymous</strong></div>
+          <div><span>Identity storage</span><strong>Pseudonymous keys only</strong></div>
         </section>
 
         <div class="privacy-layout">
@@ -49,7 +58,7 @@
           <div class="privacy-content">
             <section class="policy-section" id="scope">
               <h2>1. Scope</h2>
-              <p>This notice applies to Sift public beta version 0.4.3 and its hosted classification service. Sift runs on supported YouTube and TikTok pages. It is designed to avoid collecting a general browsing history.</p>
+              <p>This notice applies to Sift public beta version 0.4.3, its hosted classification service, and the Google sign-in account system planned for a later release. Google sign-in is not active in the current downloadable beta. Sift runs on supported YouTube and TikTok pages and is designed to avoid collecting a general browsing history.</p>
               <p>Sift identifies possible production signals. It does not determine whether a video is truthful, harmful, or appropriate.</p>
             </section>
 
@@ -65,8 +74,15 @@
               <ul>
                 <li>Video identifiers and compact summaries of detected signals.</li>
                 <li>AI, human, unsure, and dispute feedback.</li>
-                <li>A pseudonymous installation key derived from a random identifier stored by the extension.</li>
+                <li>A random installation identifier stored by the extension and sent only for transient request limiting. The API does not persist that raw identifier. Durable anonymous contribution keys are video-scoped HMACs derived from normalized network information, and raw network addresses are not stored in the application database.</li>
                 <li>Normal network information received by the API infrastructure for delivery, security, and abuse prevention.</li>
+              </ul>
+              <h3>Handled when Google sign-in launches</h3>
+              <p>Google will verify the sign-in and provide Sift with a stable account identifier called a <code>sub</code>. Sift will use a server-held secret to create an HMAC of that identifier and store only the resulting pseudonymous account key.</p>
+              <ul>
+                <li>Sift will not store your email address, the raw Google <code>sub</code>, Google ID tokens, or Google access tokens.</li>
+                <li>Sift will store hashes of rotating Sift session tokens so sessions can be expired, replaced, or revoked. Plain session tokens will not be stored in the database.</li>
+                <li>The pseudonymous account key will be used to enforce one vote per account, apply abuse limits, and maintain voting reputation.</li>
               </ul>
               <h3>Not uploaded by this beta</h3>
               <ul>
@@ -78,7 +94,7 @@
 
             <section class="policy-section" id="use">
               <h2>3. How information is used</h2>
-              <p>Sift uses the information above to return classifications, explain which signals contributed to a result, aggregate viewer feedback, prevent repeated abuse, and maintain the reliability of the beta service.</p>
+              <p>Sift uses the information above to return classifications, explain which signals contributed to a result, aggregate viewer feedback, prevent repeated abuse, and maintain the reliability of the beta service. When accounts launch, Sift will also use the pseudonymous account key to prevent duplicate votes, manage sessions, and calculate reputation from independently resolved outcomes.</p>
               <p>Sift does not sell personal information or use extension data for advertising.</p>
             </section>
 
@@ -86,6 +102,7 @@
               <h2>4. Service providers</h2>
               <p>The hosted beta uses Cloudflare Workers and Hyperdrive to receive and route API requests, and Neon to operate the PostgreSQL database. These providers process information as needed to run their infrastructure and may receive normal connection data under their own service terms.</p>
               <p>The database stores pseudonymous observer values rather than raw IP addresses. Cloudflare still receives IP and connection information when it serves a request.</p>
+              <p>When account sign-in launches, Google will authenticate the account. Sift will use the verified identity only as described above. Google may process sign-in and connection information under the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
             </section>
 
             <section class="policy-section" id="retention">
@@ -96,6 +113,9 @@
                 <p>A fixed server-retention schedule is not yet published. If you require a guaranteed deletion period, clear the API URL in Sift settings and use local mode instead of the hosted beta.</p>
               </div>
               <p>Infrastructure logs are controlled by the applicable Cloudflare and Neon service settings and retention practices.</p>
+              <h3>Account deletion after sign-in launches</h3>
+              <p>Deleting a Sift account will revoke its active Sift sessions, disable its reputation, and unlink individual votes from the active account. Sift may retain those votes and aggregate integrity records without an active account link so one deletion cannot rewrite classification history.</p>
+              <p>Sift will also retain a non-reversible HMAC tombstone of the Google account subject solely to recognize and reject an attempt by the same provider identity to recreate the deleted account and vote again. The tombstone is pseudonymous, has no public profile, cannot sign in, and is not used to reactivate reputation. It has no fixed deletion deadline in the current beta.</p>
             </section>
 
             <section class="policy-section" id="controls">
@@ -104,6 +124,7 @@
                 <li>Disable Sift at any time from <code>chrome://extensions</code>.</li>
                 <li>Clear the API base URL in Sift settings to keep classifications and feedback on your device. Shared classifications will not be available in local mode.</li>
                 <li>Remove the extension or clear its storage to delete locally stored settings and identifiers.</li>
+                <li>When Google sign-in launches, sign out to revoke the current Sift session or use the account-deletion control to unlink the account as described above.</li>
                 <li>Contact the maintainer to ask about hosted data or deletion. Server-side requests may require enough information to locate the pseudonymous record.</li>
               </ul>
             </section>
@@ -112,6 +133,8 @@
               <h2>7. Contact and changes</h2>
               <p>Sift is maintained through the <a href="https://github.com/n3try">n3try GitHub account</a>. General questions and data requests can begin through the <a href="https://github.com/n3try/sift-ai-video-filter-site/issues">public support tracker</a>. Do not post installation identifiers or other private information in a public issue. Open a minimal issue to arrange a safer follow-up channel.</p>
               <p>Security reports can be submitted privately through <a href="https://github.com/n3try/sift-ai-video-filter-site/security/advisories/new">GitHub private vulnerability reporting</a>.</p>
+              <p>Accessibility status and the reporting route for accessibility barriers are published in the <a href="accessibility.html">Accessibility Statement</a>.</p>
+              <p>Use of Sift is also governed by the <a href="terms.html">Sift Terms of Service</a>.</p>
               <p>This notice applies to the current public beta. Material changes will be recorded here with a new effective date.</p>
             </section>
           </div>

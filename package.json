@@ -1,0 +1,7 @@
+{
+  "name": "sift-ai-video-filter-site",
+  "private": true,
+  "scripts": {
+    "check": "node --test scripts/accessibility-policy.test.mjs scripts/release-policy.test.mjs scripts/zip-policy.test.mjs && node scripts/check-accessibility.mjs && node scripts/check-release.mjs"
+  }
+}

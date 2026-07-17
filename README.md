@@ -11,6 +11,16 @@ Public GitHub Pages site for downloading the Sift Chrome extension beta.
 
 Chrome does not allow normal users to install a third-party extension directly from a website. One-click installation requires the Chrome Web Store or an enterprise-managed browser policy.
 
+Only the current versioned ZIP and its byte-identical `latest` alias belong in `downloads/`. The release check scans both archives, verifies every checksum, and rejects any extension manifest capability outside the exact approved public-release policy in `scripts/release-policy.mjs`. Permission or host-scope changes require a deliberate policy and test update.
+
+## Accessibility checks
+
+Run `npm run check` before publishing. The dependency-free check covers page landmarks, skip links and targets, headings, accessible names, visible-label matching, form and table labels, persistent live status, keyboard scrolling for the narrow permissions table, fragment targets, focus treatment, reduced motion, responsive breakpoints, and the site's key text-color contrast pairs.
+
+A passing script is not ADA certification or proof of WCAG 2.2 AA conformance. Before publishing a new release, complete keyboard-only navigation, 200% text zoom, 400% page zoom at 320 CSS pixels, Windows forced-colors, NVDA with Chrome, and VoiceOver with Safari. Record the browsers, assistive-technology versions, findings, and fixes.
+
+`accessibility.html` publishes the current test status, remaining manual checks, and the accessibility-barrier reporting route. Keep it accurate whenever testing changes.
+
 ## Current package
 
 - Version: 0.4.3

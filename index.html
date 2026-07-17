@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Download Sift for Chrome and see the signals behind AI video on YouTube and TikTok." />
     <meta name="theme-color" content="#f4f4ef" />
+    <meta name="referrer" content="no-referrer" />
     <meta property="og:title" content="Sift for Chrome" />
     <meta property="og:description" content="See why a video was flagged and which signals contributed to the result." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://n3try.github.io/sift-ai-video-filter-site/" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'" />
     <link rel="canonical" href="https://n3try.github.io/sift-ai-video-filter-site/" />
     <title>Sift for Chrome</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css?v=3" />
-    <script src="script.js?v=3" defer></script>
+    <script src="script.js?v=5" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -30,19 +31,21 @@
           <a href="#install">Install</a>
           <a href="#permissions">Permissions</a>
           <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="accessibility.html">Accessibility</a>
         </nav>
-        <a class="header-download" href="https://github.com/n3try/sift-ai-video-filter-site/releases/download/v0.4.3/sift-extension-v0.4.3.zip" aria-label="Download Sift beta version 0.4.3 ZIP">Download beta</a>
+        <a class="header-download" href="downloads/sift-extension-v0.4.3.zip">Download beta</a>
       </div>
     </header>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="hero" id="top">
         <div class="hero-copy">
           <p class="kicker">Sift for Chrome <span>Public beta</span></p>
           <h1>See why a video was flagged.</h1>
           <p class="hero-lead">Sift surfaces platform labels, creator disclosures, watermark matches, and viewer feedback on YouTube and TikTok. It shows the signals it found and leaves low-evidence videos unscored.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="https://github.com/n3try/sift-ai-video-filter-site/releases/download/v0.4.3/sift-extension-v0.4.3.zip">Download beta (.zip)</a>
+            <a class="button button-primary" href="downloads/sift-extension-v0.4.3.zip">Download beta (.zip)</a>
             <a class="text-action" href="#install">View installation guide <span aria-hidden="true">&#8595;</span></a>
           </div>
           <dl class="release-meta" aria-label="Release details">
@@ -109,7 +112,7 @@
           </article>
           <article>
             <span class="row-number">03</span>
-            <div><h3>Watermark matches</h3><p>Optional low-resolution checks for configured generator watermarks, performed locally in the browser.</p></div>
+            <div><h3>Watermark matches</h3><p>Optional low-resolution checks for validated generator templates, performed locally in the browser. The current beta ships without active templates.</p></div>
             <p class="signal-role"><span>Role</span>Supporting evidence</p>
           </article>
           <article>
@@ -141,7 +144,7 @@
             <h2>Install the beta in four steps.</h2>
             <p>Chrome requires this manual process because Sift has not been published in the Chrome Web Store.</p>
           </div>
-          <ol class="install-steps">
+          <ol class="install-steps" role="list">
             <li><span>01</span><div><h3>Download the versioned ZIP</h3><p>Use the release download on this page. Chrome may ask whether you want to keep the file.</p></div></li>
             <li><span>02</span><div><h3>Extract the folder</h3><p>Extract <code>sift-extension-v0.4.3</code> to a stable location. Do not choose the ZIP itself in Chrome.</p></div></li>
             <li><span>03</span><div><h3>Enable Developer mode</h3><p>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong> in the upper-right corner.</p></div></li>
@@ -161,11 +164,11 @@
             <div><dt>Chrome</dt><dd>120 or newer</dd></div>
             <div><dt>Updates</dt><dd>Manual during beta</dd></div>
           </dl>
-          <a class="button button-primary full-width" href="https://github.com/n3try/sift-ai-video-filter-site/releases/download/v0.4.3/sift-extension-v0.4.3.zip">Download beta (.zip)</a>
+          <a class="button button-primary full-width" href="downloads/sift-extension-v0.4.3.zip">Download beta (.zip)</a>
           <a class="release-link" href="https://github.com/n3try/sift-ai-video-filter-site/releases/tag/v0.4.3">View release notes on GitHub</a>
           <div class="checksum-block">
-            <div><span>SHA-256</span><button id="copy-checksum" type="button">Copy</button></div>
-            <textarea id="checksum" readonly rows="3" aria-label="SHA-256 checksum">f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6</textarea>
+            <div><span id="checksum-label">SHA-256</span><button id="copy-checksum" type="button" aria-label="Copy SHA-256 checksum">Copy</button></div>
+            <code id="checksum" class="checksum-value" aria-labelledby="checksum-label">f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6</code>
             <p id="copy-status" role="status" aria-live="polite"></p>
           </div>
           <details class="advanced-downloads">
@@ -179,18 +182,19 @@
       <section class="section permissions-section" id="permissions">
         <div class="section-intro">
           <p class="section-label">Permissions and data</p>
-          <h2>What the extension can access.</h2>
+          <h2 id="permissions-title">What the extension can access.</h2>
           <p>The beta asks only for the browser access needed to read supported video pages, save settings, and reach the optional shared classification service.</p>
         </div>
-        <div class="permissions-table-wrap">
+        <p id="permissions-scroll-help" class="visually-hidden">On smaller screens, focus the permissions table and use the Left and Right Arrow keys to scroll it.</p>
+        <div class="permissions-table-wrap" role="region" aria-labelledby="permissions-title" aria-describedby="permissions-scroll-help" tabindex="0">
           <table>
             <caption class="visually-hidden">Sift browser permissions and data handling</caption>
             <thead><tr><th scope="col">Permission or access</th><th scope="col">Why Sift needs it</th><th scope="col">Data handling</th></tr></thead>
             <tbody>
               <tr><th scope="row">YouTube and TikTok pages</th><td>Read visible labels, captions, descriptions, and the current video identifier.</td><td>Compact signal summaries may be sent in hosted mode.</td></tr>
-              <tr><th scope="row">Storage</th><td>Save preferences, local classifications, and a random installation identifier.</td><td>Settings stay in Chrome. A pseudonymous key supports feedback and abuse limits.</td></tr>
-              <tr><th scope="row">Active tab</th><td>Update the current supported page when you interact with the extension.</td><td>No general browsing history is collected.</td></tr>
-              <tr><th scope="row">Sift API</th><td>Retrieve shared classifications and submit compact signals or feedback.</td><td>Optional. Clear the API URL in settings to use local mode.</td></tr>
+              <tr><th scope="row">Storage</th><td>Save preferences, local classifications, and a random installation identifier.</td><td>Settings stay in Chrome. Hosted mode uses transient request limits and pseudonymous, video-scoped contribution keys.</td></tr>
+              <tr><th scope="row">Current supported page</th><td>The downloadable 0.4.3 beta includes <code>activeTab</code> so it can inspect the current tab when you use Sift.</td><td>No general browsing history is collected.</td></tr>
+              <tr><th scope="row">Sift API</th><td>Retrieve shared classifications and submit compact signals or feedback.</td><td>The 0.4.3 manifest grants this host at install time. Clear the API URL in settings to use local mode.</td></tr>
               <tr><th scope="row">Custom HTTPS API</th><td>Connect to a compatible API endpoint that you enter in settings.</td><td>Optional. Chrome asks you to approve access to the custom host.</td></tr>
             </tbody>
           </table>
@@ -198,7 +202,11 @@
         <div class="data-note">
           <strong>Not uploaded by this beta</strong>
           <p>Full videos, audio, screenshots, sampled video frames, raw captions, personal messages, and passwords.</p>
-          <a href="privacy.html">Read the full beta privacy notice</a>
+          <div class="legal-links">
+            <a href="privacy.html">Privacy notice</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="accessibility.html">Accessibility</a>
+          </div>
         </div>
       </section>
 
@@ -239,6 +247,8 @@
       </div>
       <nav aria-label="Footer navigation">
         <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="accessibility.html">Accessibility</a>
         <a href="https://github.com/n3try/sift-ai-video-filter-site/releases/tag/v0.4.3">Release 0.4.3</a>
         <a href="https://github.com/n3try/sift-ai-video-filter-site/issues">Support</a>
         <a href="https://github.com/n3try/sift-ai-video-filter-site">Website repository</a>
