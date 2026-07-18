@@ -24,28 +24,57 @@ function violationFingerprints(violations) {
 }
 
 async function layoutBarriers(page) {
-  return page.evaluate(() => ({
-    horizontalOverflow: Math.max(
-      0,
-      document.documentElement.scrollWidth - window.innerWidth,
-      document.body.scrollWidth - window.innerWidth,
-    ),
-    clippedText: [...document.querySelectorAll("main *")]
-      .filter((element) => {
-        if (!(element instanceof HTMLElement)) return false;
-        if (!element.textContent?.trim() || element.closest(".visually-hidden, .clipboard-fallback")) return false;
-        const style = getComputedStyle(element);
-        return ["hidden", "clip"].includes(style.overflowY)
-          && element.scrollHeight > element.clientHeight + 1;
-      })
-      .map((element) => ({
-        tag: element.tagName,
-        className: element.className,
-        id: element.id,
-        clientHeight: element.clientHeight,
-        scrollHeight: element.scrollHeight,
-      })),
-  }));
+  return page.evaluate(() => {
+    const viewportWidth = window.innerWidth;
+    return {
+      horizontalOverflow: Math.max(
+        0,
+        document.documentElement.scrollWidth - viewportWidth,
+        document.body.scrollWidth - viewportWidth,
+      ),
+      overflowingElements: [...document.querySelectorAll("body *")]
+        .filter((element) => {
+          if (!(element instanceof HTMLElement)) return false;
+          const rect = element.getBoundingClientRect();
+          const contentRight = rect.left + element.scrollWidth;
+          return rect.left < -1 || rect.right > viewportWidth + 1 || contentRight > viewportWidth + 1;
+        })
+        .map((element) => {
+          const rect = element.getBoundingClientRect();
+          const style = getComputedStyle(element);
+          return {
+            tag: element.tagName,
+            className: element.className,
+            id: element.id,
+            text: element.textContent?.trim().replace(/\s+/g, " ").slice(0, 80) ?? "",
+            left: Math.round(rect.left * 10) / 10,
+            right: Math.round(rect.right * 10) / 10,
+            width: Math.round(rect.width * 10) / 10,
+            clientWidth: element.clientWidth,
+            scrollWidth: element.scrollWidth,
+            overflowX: style.overflowX,
+            position: style.position,
+            whiteSpace: style.whiteSpace,
+          };
+        })
+        .slice(0, 20),
+      clippedText: [...document.querySelectorAll("main *")]
+        .filter((element) => {
+          if (!(element instanceof HTMLElement)) return false;
+          if (!element.textContent?.trim() || element.closest(".visually-hidden, .clipboard-fallback")) return false;
+          const style = getComputedStyle(element);
+          return ["hidden", "clip"].includes(style.overflowY)
+            && element.scrollHeight > element.clientHeight + 1;
+        })
+        .map((element) => ({
+          tag: element.tagName,
+          className: element.className,
+          id: element.id,
+          clientHeight: element.clientHeight,
+          scrollHeight: element.scrollHeight,
+        })),
+    };
+  });
 }
 
 async function openPage(page, pageName) {
@@ -134,7 +163,10 @@ for (const pageName of SITE_PAGES) {
 
     expect(browserErrors, `${pageName} emitted browser errors`).toEqual([]);
     const barriers = await layoutBarriers(page);
-    expect(barriers.horizontalOverflow, `${pageName} overflows after WCAG text spacing`).toBeLessThanOrEqual(1);
+    expect(
+      barriers.horizontalOverflow,
+      `${pageName} overflows after WCAG text spacing: ${JSON.stringify(barriers.overflowingElements)}`,
+    ).toBeLessThanOrEqual(1);
     expect(barriers.clippedText, `${pageName} clips text after WCAG text spacing`).toEqual([]);
   });
 
@@ -155,7 +187,10 @@ for (const pageName of SITE_PAGES) {
 
     expect(browserErrors, `${pageName} emitted browser errors`).toEqual([]);
     const barriers = await layoutBarriers(page);
-    expect(barriers.horizontalOverflow, `${pageName} overflows at 200 percent text size`).toBeLessThanOrEqual(1);
+    expect(
+      barriers.horizontalOverflow,
+      `${pageName} overflows at 200 percent text size: ${JSON.stringify(barriers.overflowingElements)}`,
+    ).toBeLessThanOrEqual(1);
     expect(barriers.clippedText, `${pageName} clips text at 200 percent text size`).toEqual([]);
   });
 }
