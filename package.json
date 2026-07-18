@@ -3,9 +3,13 @@
   "private": true,
   "scripts": {
     "check": "node --test scripts/accessibility-policy.test.mjs scripts/html-policy.test.mjs scripts/release-policy.test.mjs scripts/zip-policy.test.mjs && npm run check:html && node scripts/check-accessibility.mjs && node scripts/check-release.mjs",
-    "check:html": "html-validate \"*.html\""
+    "check:html": "html-validate \"*.html\"",
+    "check:browser": "playwright test",
+    "install:browsers": "playwright install chromium firefox webkit"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
     "html-validate": "11.5.6"
   }
 }

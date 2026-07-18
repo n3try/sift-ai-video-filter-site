@@ -27,3 +27,28 @@ jobs:
       - run: npm audit --audit-level=low
       - run: npm run check
       - run: git diff --exit-code
+
+  rendered-accessibility:
+    needs: site
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24.15.0
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - run: npm exec -- playwright install --with-deps chromium firefox webkit
+      - run: npm run check:browser
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: rendered-accessibility-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7

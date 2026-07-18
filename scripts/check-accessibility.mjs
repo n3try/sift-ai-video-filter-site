@@ -1,9 +1,10 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { hasUnsupportedConformanceClaim } from "./accessibility-policy.mjs";
+import { SITE_PAGES } from "./site-pages.mjs";
 
 const root = resolve(import.meta.dirname, "..");
-const pageNames = ["index.html", "privacy.html", "terms.html", "accessibility.html", "404.html"];
+const pageNames = SITE_PAGES;
 const failures = [];
 const INTERACTIVE_CSP = "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'";
 const STATIC_CSP = "default-src 'self'; style-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'";
@@ -225,11 +226,15 @@ function checkBehavior() {
 
 function checkStatement() {
   const statement = readFileSync(resolve(root, "accessibility.html"), "utf8");
+  const packageJson = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
+  const playwrightVersion = packageJson.devDependencies?.["@playwright/test"];
   for (const required of [
     "not a claim of legal certification",
     "400 percent",
     "NVDA",
     "VoiceOver",
+    "320 CSS pixels",
+    `Playwright ${playwrightVersion}`,
     "sift-ai-video-filter-site/issues",
   ]) {
     if (!statement.includes(required)) fail("accessibility.html", `accessibility status is missing: ${required}`);
@@ -241,6 +246,20 @@ function checkStatement() {
   }
 }
 
+function checkPageCoverage() {
+  const discovered = readdirSync(root)
+    .filter((name) => name.endsWith(".html"))
+    .sort();
+  const expected = [...pageNames].sort();
+  if (JSON.stringify(discovered) !== JSON.stringify(expected)) {
+    fail(
+      "site pages",
+      `rendered/source coverage mismatch; found ${discovered.join(", ")}; configured ${expected.join(", ")}`,
+    );
+  }
+}
+
+checkPageCoverage();
 for (const pageName of pageNames) checkPage(pageName);
 checkStyles();
 checkBehavior();

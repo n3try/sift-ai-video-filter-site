@@ -70,6 +70,6 @@ copyButton?.addEventListener("click", async () => {
     copyStatus.textContent = "Checksum copied to clipboard.";
   } else {
     selectChecksum();
-    copyStatus.textContent = "Checksum selected. Press Ctrl+C to copy.";
+    copyStatus.textContent = "Checksum selected. Use your system's copy shortcut to copy.";
   }
 });
