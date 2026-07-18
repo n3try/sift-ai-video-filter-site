@@ -310,7 +310,8 @@ h1 {
   font-weight: 600;
 }
 
-.text-action span {
+.text-action::after {
+  content: "\2193";
   color: var(--accent);
   font-size: 17px;
 }
@@ -974,6 +975,7 @@ h1 {
 .permissions-table-wrap td {
   padding: 20px 22px 20px 0;
   border-bottom: 1px solid var(--line);
+  background: var(--canvas);
   text-align: left;
   vertical-align: top;
   font-size: 13px;

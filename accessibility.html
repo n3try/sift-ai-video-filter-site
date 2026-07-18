@@ -34,7 +34,7 @@
           <p class="section-label">Accessibility statement</p>
           <h1>Sift should work for more than one way of browsing.</h1>
           <p class="lead">The Sift website is being developed toward WCAG 2.2 Level AA. It has not received an independent accessibility audit, and this statement is not a claim of legal certification.</p>
-          <p class="policy-meta"><span><strong>Updated:</strong> July 17, 2026</span><span><strong>Target:</strong> WCAG 2.2 Level AA</span><span><strong>Status:</strong> Verification in progress</span></p>
+          <p class="policy-meta"><span><strong>Updated:</strong> July 18, 2026</span><span><strong>Target:</strong> WCAG 2.2 Level AA</span><span><strong>Status:</strong> Verification in progress</span></p>
         </section>
 
         <section class="privacy-summary" aria-label="Accessibility summary">
@@ -76,7 +76,7 @@
             <section class="policy-section" id="testing">
               <h2>3. Testing completed</h2>
               <p>The project source checker currently passes all published pages. It checks page structure, accessible names, label matching, table headers, fragment targets, focus treatment, reduced motion, responsive rules, selected color-contrast pairs, persistent status messages, and keyboard support for the permissions table.</p>
-              <p>The release gate is configured to render all five published pages with Playwright 1.61.1 bundled Chromium, Firefox, and WebKit engines on Ubuntu 24.04 at desktop width and 320 CSS pixels. All three engines run axe checks for automatically detectable WCAG A and AA issues, page-level reflow checks, and the checksum, permissions-table, disclosure, and reduced-motion interactions. Skip-link focus and the first keyboard stop are checked in Chromium and Firefox. WebKit's full keyboard access depends on Safari's operating-system preference, so that behavior remains a real-Safari manual gate. Chromium also runs a forced-colors smoke test. Each release commit must pass this gate; CI retains the full axe results, including inconclusive findings, for review.</p>
+              <p>The release gate is configured to render all five published pages with Playwright 1.61.1 bundled Chromium, Firefox, and WebKit engines on Ubuntu 24.04 at desktop width and 320 CSS pixels. All three engines run axe checks for automatically detectable WCAG A and AA issues, page-level reflow checks, simulated WCAG text-spacing and 200 percent text-resize checks, and the checksum, permissions-table, disclosure, and reduced-motion interactions. Skip-link focus and the first keyboard stop are checked in Chromium and Firefox. WebKit's full keyboard access depends on Safari's operating-system preference, so that behavior remains a real-Safari manual gate. Chromium also runs a forced-colors smoke test. Each release commit must pass this gate. CI retains the full axe results and rejects both violations and checks that axe cannot determine.</p>
               <div class="policy-callout">
                 <strong>What this does not prove</strong>
                 <p>Bundled browser-engine tests and a passing automated scan do not prove that every user can complete every task with assistive technology. They are not substitutes for current Chrome with NVDA, current Safari with VoiceOver, manual zoom, or inclusive user testing.</p>

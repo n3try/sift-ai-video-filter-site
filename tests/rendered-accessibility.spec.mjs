@@ -23,6 +23,31 @@ function violationFingerprints(violations) {
   }));
 }
 
+async function layoutBarriers(page) {
+  return page.evaluate(() => ({
+    horizontalOverflow: Math.max(
+      0,
+      document.documentElement.scrollWidth - window.innerWidth,
+      document.body.scrollWidth - window.innerWidth,
+    ),
+    clippedText: [...document.querySelectorAll("main *")]
+      .filter((element) => {
+        if (!(element instanceof HTMLElement)) return false;
+        if (!element.textContent?.trim() || element.closest(".visually-hidden, .clipboard-fallback")) return false;
+        const style = getComputedStyle(element);
+        return ["hidden", "clip"].includes(style.overflowY)
+          && element.scrollHeight > element.clientHeight + 1;
+      })
+      .map((element) => ({
+        tag: element.tagName,
+        className: element.className,
+        id: element.id,
+        clientHeight: element.clientHeight,
+        scrollHeight: element.scrollHeight,
+      })),
+  }));
+}
+
 async function openPage(page, pageName) {
   const route = pageName === "404.html" ? "missing-page" : pageName;
   const expectedStatus = pageName === "404.html" ? 404 : 200;
@@ -69,14 +94,14 @@ for (const viewport of VIEWPORTS) {
         body: Buffer.from(JSON.stringify(scan, null, 2)),
         contentType: "application/json",
       });
-      if (scan.incomplete.length > 0) {
-        console.warn(`${pageName} at ${viewport.name}: ${scan.incomplete.length} axe checks require manual review.`);
-      }
-
       expect(browserErrors, `${pageName} emitted browser errors`).toEqual([]);
       expect(
         violationFingerprints(scan.violations),
         `${pageName} at ${viewport.name} has automatically detectable WCAG violations`,
+      ).toEqual([]);
+      expect(
+        violationFingerprints(scan.incomplete),
+        `${pageName} at ${viewport.name} has axe checks that could not reach a result`,
       ).toEqual([]);
 
       const overflow = await page.evaluate(() => Math.max(
@@ -87,6 +112,52 @@ for (const viewport of VIEWPORTS) {
       expect(overflow, `${pageName} creates page-level horizontal overflow`).toBeLessThanOrEqual(1);
     });
   }
+}
+
+for (const pageName of SITE_PAGES) {
+  test(`${pageName} tolerates WCAG text spacing at 320px reflow`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    const browserErrors = await openPage(page, pageName);
+    await page.evaluate(() => {
+      for (const element of document.querySelectorAll("*")) {
+        if (!(element instanceof HTMLElement)) continue;
+        element.style.setProperty("line-height", "1.5", "important");
+        element.style.setProperty("letter-spacing", "0.12em", "important");
+        element.style.setProperty("word-spacing", "0.16em", "important");
+      }
+      for (const paragraph of document.querySelectorAll("p")) {
+        if (paragraph instanceof HTMLElement) {
+          paragraph.style.setProperty("margin-bottom", "2em", "important");
+        }
+      }
+    });
+
+    expect(browserErrors, `${pageName} emitted browser errors`).toEqual([]);
+    const barriers = await layoutBarriers(page);
+    expect(barriers.horizontalOverflow, `${pageName} overflows after WCAG text spacing`).toBeLessThanOrEqual(1);
+    expect(barriers.clippedText, `${pageName} clips text after WCAG text spacing`).toEqual([]);
+  });
+
+  test(`${pageName} supports 200 percent text resizing`, async ({ page }) => {
+    await page.setViewportSize({ width: 1_280, height: 900 });
+    const browserErrors = await openPage(page, pageName);
+    await page.evaluate(() => {
+      const sizes = [...document.querySelectorAll("*")].map((element) => [
+        element,
+        Number.parseFloat(getComputedStyle(element).fontSize),
+      ]);
+      for (const [element, size] of sizes) {
+        if (element instanceof HTMLElement && Number.isFinite(size)) {
+          element.style.setProperty("font-size", `${size * 2}px`, "important");
+        }
+      }
+    });
+
+    expect(browserErrors, `${pageName} emitted browser errors`).toEqual([]);
+    const barriers = await layoutBarriers(page);
+    expect(barriers.horizontalOverflow, `${pageName} overflows at 200 percent text size`).toBeLessThanOrEqual(1);
+    expect(barriers.clippedText, `${pageName} clips text at 200 percent text size`).toEqual([]);
+  });
 }
 
 for (const viewport of VIEWPORTS) {
