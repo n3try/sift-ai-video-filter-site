@@ -1189,6 +1189,7 @@ h1 {
 .error-shell h1 {
   max-width: 750px;
   margin: 18px 0 20px;
+  overflow-wrap: anywhere;
   font-size: clamp(46px, 7vw, 70px);
   font-weight: 650;
   line-height: 1;
