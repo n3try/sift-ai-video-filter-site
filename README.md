@@ -5,7 +5,7 @@ Public GitHub Pages site for downloading the Sift Chrome extension beta.
 ## Install
 
 1. Download the versioned ZIP from the GitHub Release or use `downloads/sift-extension-latest.zip`.
-2. Extract the `sift-extension-v0.4.3` folder.
+2. Extract the `sift-extension-v0.5.0` folder.
 3. Open `chrome://extensions` and enable Developer mode.
 4. Choose **Load unpacked** and select the extracted folder containing `manifest.json`.
 
@@ -25,7 +25,7 @@ A passing source or rendered-browser script is not ADA certification or proof of
 
 ## Current package
 
-- Version: 0.4.3
-- SHA-256: `f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6`
+- Version: 0.5.0
+- SHA-256: `164b133ffb123a0ebabf2a5ad32eb81f784bf7874ec14ced464ea25339e1480d`
 - Source repository: private
 - Website and compiled beta package: public

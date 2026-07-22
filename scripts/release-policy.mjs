@@ -4,10 +4,7 @@ const PLATFORM_MATCHES = [
   "https://www.tiktok.com/*",
 ];
 
-const REQUIRED_HOSTS = [
-  ...PLATFORM_MATCHES,
-  "https://sift-api.leo-r-green.workers.dev/*",
-];
+const REQUIRED_HOSTS = [...PLATFORM_MATCHES];
 
 const OPTIONAL_HOSTS = [
   "https://*/*",
@@ -45,11 +42,11 @@ export function validatePublishedManifest(manifest) {
   assert(manifest && typeof manifest === "object" && !Array.isArray(manifest), "Published manifest must be an object.");
   exact(Object.keys(manifest).sort(), TOP_LEVEL_KEYS, "Published manifest has unexpected top-level capabilities.");
   assert(manifest.manifest_version === 3, "Published extension must use Manifest V3.");
-  assert(manifest.version === "0.4.3", "Published manifest version is not the approved release.");
+  assert(manifest.version === "0.5.0", "Published manifest version is not the approved release.");
   assert(manifest.minimum_chrome_version === "120", "Published minimum Chrome version is unexpected.");
   assert(manifest.name === "Sift: AI Video Filter" && manifest.short_name === "Sift", "Published extension identity is unexpected.");
   assert(manifest.description === "Warn about and skip likely AI-generated videos on YouTube and TikTok.", "Published extension description is unexpected.");
-  exact(manifest.permissions, ["storage", "activeTab"], "Published extension has unexpected required permissions.");
+  exact(manifest.permissions, ["storage"], "Published extension has unexpected required permissions.");
   exact(manifest.host_permissions, REQUIRED_HOSTS, "Published extension has unexpected required host permissions.");
   exact(manifest.optional_host_permissions, OPTIONAL_HOSTS, "Published extension has unexpected optional host permissions.");
   exact(manifest.background, { service_worker: "background.js" }, "Published background configuration is unexpected.");
@@ -68,11 +65,18 @@ export function validatePublishedManifest(manifest) {
     "48": "assets/icon-48.png",
     "128": "assets/icon-128.png",
   }, "Published icons are unexpected.");
-  exact(manifest.content_scripts, [{
-    matches: PLATFORM_MATCHES,
-    js: ["content.js"],
-    run_at: "document_idle",
-  }], "Published content-script scope is unexpected.");
+  exact(manifest.content_scripts, [
+    {
+      matches: PLATFORM_MATCHES,
+      js: ["content.js"],
+      run_at: "document_idle",
+    },
+    {
+      matches: ["https://sift-api.leo-r-green.workers.dev/v1/auth/google/callback*"],
+      js: ["auth-callback.js"],
+      run_at: "document_start",
+    },
+  ], "Published content-script scope is unexpected.");
   exact(manifest.content_security_policy, {
     extension_pages: "script-src 'self'; object-src 'self'",
   }, "Published extension CSP is unexpected.");

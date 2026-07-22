@@ -4,11 +4,11 @@ import test from "node:test";
 import { resolve } from "node:path";
 import { validateGeneratedIcon, zipEntries } from "./zip-policy.mjs";
 
-const archive = readFileSync(resolve(import.meta.dirname, "..", "downloads", "sift-extension-v0.4.3.zip"));
+const archive = readFileSync(resolve(import.meta.dirname, "..", "downloads", "sift-extension-v0.5.0.zip"));
 
 test("accepts the exact published ZIP structure", () => {
   const parsed = zipEntries(archive);
-  assert.equal(parsed.entries.length, 22);
+  assert.equal(parsed.entries.length, 23);
 });
 
 test("rejects an archive comment payload", () => {

@@ -1,2 +1,2 @@
-f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6  sift-extension-v0.4.3.zip
-f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6  sift-extension-latest.zip
+164b133ffb123a0ebabf2a5ad32eb81f784bf7874ec14ced464ea25339e1480d  sift-extension-v0.5.0.zip
+164b133ffb123a0ebabf2a5ad32eb81f784bf7874ec14ced464ea25339e1480d  sift-extension-latest.zip

@@ -7,7 +7,7 @@ function validManifest() {
     manifest_version: 3,
     name: "Sift: AI Video Filter",
     short_name: "Sift",
-    version: "0.4.3",
+    version: "0.5.0",
     minimum_chrome_version: "120",
     description: "Warn about and skip likely AI-generated videos on YouTube and TikTok.",
     icons: {
@@ -16,12 +16,11 @@ function validManifest() {
       "48": "assets/icon-48.png",
       "128": "assets/icon-128.png",
     },
-    permissions: ["storage", "activeTab"],
+    permissions: ["storage"],
     host_permissions: [
       "https://www.youtube.com/*",
       "https://youtube.com/*",
       "https://www.tiktok.com/*",
-      "https://sift-api.leo-r-green.workers.dev/*",
     ],
     optional_host_permissions: [
       "https://*/*",
@@ -38,15 +37,22 @@ function validManifest() {
       },
     },
     options_page: "settings.html",
-    content_scripts: [{
-      matches: [
-        "https://www.youtube.com/*",
-        "https://youtube.com/*",
-        "https://www.tiktok.com/*",
-      ],
-      js: ["content.js"],
-      run_at: "document_idle",
-    }],
+    content_scripts: [
+      {
+        matches: [
+          "https://www.youtube.com/*",
+          "https://youtube.com/*",
+          "https://www.tiktok.com/*",
+        ],
+        js: ["content.js"],
+        run_at: "document_idle",
+      },
+      {
+        matches: ["https://sift-api.leo-r-green.workers.dev/v1/auth/google/callback*"],
+        js: ["auth-callback.js"],
+        run_at: "document_start",
+      },
+    ],
     content_security_policy: {
       extension_pages: "script-src 'self'; object-src 'self'",
     },
@@ -75,10 +81,10 @@ for (const [name, mutate] of [
 
 test("accepts only the approved public download files", () => {
   assert.doesNotThrow(() => validatePublishedDownloadNames([
-    "sift-extension-v0.4.3.zip",
+    "sift-extension-v0.5.0.zip",
     "checksums.txt",
     "sift-extension-latest.zip",
-  ], "0.4.3"));
+  ], "0.5.0"));
 });
 
 for (const unexpected of ["old.ZIP", "archive.Zip", "secrets.txt", ".env", "nested-directory"]) {
@@ -86,8 +92,8 @@ for (const unexpected of ["old.ZIP", "archive.Zip", "secrets.txt", ".env", "nest
     assert.throws(() => validatePublishedDownloadNames([
       "checksums.txt",
       "sift-extension-latest.zip",
-      "sift-extension-v0.4.3.zip",
+      "sift-extension-v0.5.0.zip",
       unexpected,
-    ], "0.4.3"));
+    ], "0.5.0"));
   });
 }

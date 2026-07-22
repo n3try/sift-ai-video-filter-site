@@ -7,7 +7,7 @@ import { validateGeneratedIcon, zipEntries } from "./zip-policy.mjs";
 const root = resolve(import.meta.dirname, "..");
 const downloads = resolve(root, "downloads");
 const failures = [];
-const LEGACY_BACKSLASH_PACKAGE_SHA256 = "f8594ca16c4cd834dfa5ceaed0819f8865f790d34ed15d1f66c2a8e892463fa6";
+const APPROVED_PACKAGE_SHA256 = "164b133ffb123a0ebabf2a5ad32eb81f784bf7874ec14ced464ea25339e1480d";
 
 function fail(message) {
   failures.push(message);
@@ -82,7 +82,8 @@ try {
   const versioned = readFileSync(resolve(downloads, versionedName));
   assert(latest.equals(versioned), "Latest package alias is not byte-identical to the versioned package.");
   const latestHash = sha256(latest);
-  assert(!legacyBackslashes || latestHash === LEGACY_BACKSLASH_PACKAGE_SHA256, "Only the exact known 0.4.3 package may use legacy backslash ZIP paths.");
+  assert(!legacyBackslashes, "Published ZIP entries must use portable forward-slash paths.");
+  assert(latestHash === APPROVED_PACKAGE_SHA256, "Published package is not the exact approved 0.5.0 Chromium archive.");
   const checksumText = readFileSync(resolve(downloads, "checksums.txt"), "utf8");
   const checksumEntries = new Map();
   for (const line of checksumText.trim().split(/\r?\n/)) {
@@ -107,7 +108,7 @@ try {
     const publishedManifest = JSON.parse(publishedManifestEntry.data.toString("utf8"));
     validatePublishedManifest(publishedManifest);
     assert(publishedManifest.version === version, `${name} does not contain the current release version.`);
-    assert(publishedHash === LEGACY_BACKSLASH_PACKAGE_SHA256, `Published 0.4.3 package is not the exact approved archive: ${name}.`);
+    assert(publishedHash === APPROVED_PACKAGE_SHA256, `Published 0.5.0 package is not the exact approved archive: ${name}.`);
   }
   assert(checksumEntries.get("sift-extension-latest.zip") === latestHash && checksumEntries.get(versionedName) === latestHash, "Current-package checksums disagree.");
 
@@ -135,7 +136,6 @@ try {
   const apiIsRequired = manifest.host_permissions?.includes("https://sift-api.leo-r-green.workers.dev/*");
   assert(apiIsRequired ? index.includes("manifest grants this host at install time") : !index.includes("manifest grants this host at install time"), "Website API permission disclosure disagrees with the package manifest.");
 
-  if (legacyBackslashes) console.warn("Known legacy 0.4.3 ZIP path separators accepted; all newer release candidates must use forward slashes.");
   console.log(`Release checks passed for ${versionedName} (${size}, ${latestHash}).`);
 } catch (error) {
   fail(error instanceof Error ? error.message : String(error));
