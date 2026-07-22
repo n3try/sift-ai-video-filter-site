@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Accessibility status, testing, known verification work, and feedback route for the Sift website." />
+    <meta name="theme-color" content="#f4f4ef" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'" />
+    <title>Accessibility | Sift</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="script.js?v=5" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="privacy-shell">
+      <header class="privacy-header">
+        <a class="brand" href="index.html" aria-label="Sift home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+          <span>Sift</span>
+        </a>
+        <nav class="policy-page-nav" aria-label="Policy navigation">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="accessibility.html" aria-current="page">Accessibility</a>
+          <a href="index.html">Download</a>
+        </nav>
+      </header>
+
+      <main id="main" tabindex="-1">
+        <section class="privacy-hero">
+          <p class="section-label">Accessibility statement</p>
+          <h1>Sift should work for more than one way of browsing.</h1>
+          <p class="lead">The Sift website is being developed toward WCAG 2.2 Level AA. It has not received an independent accessibility audit, and this statement is not a claim of legal certification.</p>
+          <p class="policy-meta"><span><strong>Updated:</strong> July 18, 2026</span><span><strong>Target:</strong> WCAG 2.2 Level AA</span><span><strong>Status:</strong> Verification in progress</span></p>
+        </section>
+
+        <section class="privacy-summary" aria-label="Accessibility summary">
+          <div><span>Automated source checks</span><strong>Passing</strong></div>
+          <div><span>Rendered engine checks</span><strong>Release gate configured</strong></div>
+          <div><span>Assistive technology audit</span><strong>Still required</strong></div>
+        </section>
+
+        <div class="privacy-layout">
+          <nav class="privacy-toc" aria-label="Accessibility sections">
+            <p>On this page</p>
+            <a href="#commitment">Commitment</a>
+            <a href="#features">Current features</a>
+            <a href="#testing">Testing completed</a>
+            <a href="#remaining">Verification remaining</a>
+            <a href="#feedback">Report a barrier</a>
+          </nav>
+
+          <div class="privacy-content">
+            <section class="policy-section" id="commitment">
+              <h2>1. Commitment and standard</h2>
+              <p>Sift aims to provide equal access to its download, installation, privacy, terms, and support information. WCAG 2.2 Level AA is the project target because it provides a concrete technical baseline for perceivable, operable, understandable, and robust web content.</p>
+              <p>Automated results alone cannot establish accessibility conformance. The status above will remain "Verification in progress" until the manual and assistive-technology checks listed below are completed and any resulting barriers are fixed.</p>
+            </section>
+
+            <section class="policy-section" id="features">
+              <h2>2. Current accessibility features</h2>
+              <ul>
+                <li>Semantic headings, landmarks, lists, tables, and descriptive page titles.</li>
+                <li>Skip links that move keyboard focus to the main content.</li>
+                <li>Visible keyboard focus and no positive tab order overrides.</li>
+                <li>Text and controls designed to reflow on narrow screens.</li>
+                <li>Reduced-motion and forced-colors styles.</li>
+                <li>Persistent status text after the checksum copy action.</li>
+                <li>Keyboard scrolling instructions and arrow-key support for the wide permissions table.</li>
+              </ul>
+            </section>
+
+            <section class="policy-section" id="testing">
+              <h2>3. Testing completed</h2>
+              <p>The project source checker currently passes all published pages. It checks page structure, accessible names, label matching, table headers, fragment targets, focus treatment, reduced motion, responsive rules, selected color-contrast pairs, persistent status messages, and keyboard support for the permissions table.</p>
+              <p>The release gate is configured to render all five published pages with Playwright 1.61.1 bundled Chromium, Firefox, and WebKit engines on Ubuntu 24.04 at desktop width and 320 CSS pixels. All three engines run axe checks for automatically detectable WCAG A and AA issues, page-level reflow checks, simulated WCAG text-spacing and 200 percent text-resize checks, and the checksum, permissions-table, disclosure, and reduced-motion interactions. Skip-link focus and the first keyboard stop are checked in Chromium and Firefox. WebKit's full keyboard access depends on Safari's operating-system preference, so that behavior remains a real-Safari manual gate. Chromium also runs a forced-colors smoke test. Each release commit must pass this gate. CI retains the full axe results and rejects both violations and checks that axe cannot determine.</p>
+              <div class="policy-callout">
+                <strong>What this does not prove</strong>
+                <p>Bundled browser-engine tests and a passing automated scan do not prove that every user can complete every task with assistive technology. They are not substitutes for current Chrome with NVDA, current Safari with VoiceOver, manual zoom, or inclusive user testing.</p>
+              </div>
+            </section>
+
+            <section class="policy-section" id="remaining">
+              <h2>4. Verification still required</h2>
+              <ul>
+                <li>Complete every page and action using only a keyboard and confirm a logical focus order.</li>
+                <li>Verify text resizing at 200 percent and page reflow at 400 percent without lost content or controls.</li>
+                <li>Test Windows High Contrast and browser forced-colors modes.</li>
+                <li>Test current Chrome with NVDA on Windows.</li>
+                <li>Test current Safari with VoiceOver on macOS.</li>
+              </ul>
+              <p>Until these checks pass, Sift does not describe this website as audited, certified, or fully conformant.</p>
+            </section>
+
+            <section class="policy-section" id="feedback">
+              <h2>5. Report an accessibility barrier</h2>
+              <p>If part of this website prevents you from downloading Sift or reading its information, open an <a href="https://github.com/n3try/sift-ai-video-filter-site/issues">issue in the Sift support tracker</a>. Start the issue title with "Accessibility" and include the page, browser, assistive technology, and task that did not work when you can do so safely.</p>
+              <p>Do not include passwords, session values, installation identifiers, or other private information in a public issue. If GitHub itself prevents you from using the reporting route, contact the maintainer through the <a href="https://github.com/n3try">n3try GitHub profile</a> so an alternate route can be arranged.</p>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

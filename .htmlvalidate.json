@@ -1,0 +1,12 @@
+{
+  "$schema": "https://html-validate.org/schemas/config.json",
+  "root": true,
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "aria-label-misuse": "error",
+    "doctype-style": "off",
+    "no-redundant-role": "off",
+    "prefer-native-element": "off",
+    "void-style": "off"
+  }
+}

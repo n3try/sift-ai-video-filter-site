@@ -96,6 +96,20 @@ code {
   border: 0;
 }
 
+.clipboard-fallback {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+main[tabindex="-1"]:focus {
+  outline: none;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -296,7 +310,8 @@ h1 {
   font-weight: 600;
 }
 
-.text-action span {
+.text-action::after {
+  content: "\2193";
   color: var(--accent);
   font-size: 17px;
 }
@@ -479,10 +494,12 @@ h1 {
 
 .evidence-list {
   margin: 0 22px;
+  padding: 0;
   border-top: 1px solid var(--line-dark);
+  list-style: none;
 }
 
-.evidence-list > div {
+.evidence-list > li {
   min-height: 70px;
   display: grid;
   grid-template-columns: 28px 1fr auto;
@@ -809,7 +826,7 @@ h1 {
   place-items: center;
   border: 1px solid #e7b8b7;
   border-radius: 7px;
-  color: var(--accent);
+  color: var(--accent-hover);
   background: var(--accent-soft);
   font-size: 10px;
   font-weight: 800;
@@ -896,20 +913,16 @@ h1 {
   font-weight: 600;
 }
 
-.checksum-block textarea {
+.checksum-value {
   width: 100%;
   margin-top: 12px;
   display: block;
-  padding: 0;
-  border: 0;
   color: var(--muted);
-  background: transparent;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 10px;
   line-height: 1.55;
-  resize: none;
-  overflow: hidden;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .checksum-block p {
@@ -962,6 +975,7 @@ h1 {
 .permissions-table-wrap td {
   padding: 20px 22px 20px 0;
   border-bottom: 1px solid var(--line);
+  background: var(--canvas);
   text-align: left;
   vertical-align: top;
   font-size: 13px;
@@ -1012,6 +1026,13 @@ h1 {
   text-underline-offset: 4px;
   font-size: 12px;
   font-weight: 600;
+}
+
+.legal-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .faq-section {
@@ -1118,6 +1139,33 @@ h1 {
   border-bottom: 1px solid var(--line);
 }
 
+.policy-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.policy-page-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.policy-page-nav a:hover,
+.policy-page-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.policy-page-nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
 .back-link {
   min-height: 44px;
   display: inline-flex;
@@ -1141,6 +1189,7 @@ h1 {
 .error-shell h1 {
   max-width: 750px;
   margin: 18px 0 20px;
+  overflow-wrap: anywhere;
   font-size: clamp(46px, 7vw, 70px);
   font-weight: 650;
   line-height: 1;
@@ -1513,7 +1562,7 @@ h1 {
     border-left: 0;
   }
 
-  .evidence-list > div {
+  .evidence-list > li {
     grid-template-columns: 25px 1fr;
     padding: 15px 0;
   }
@@ -1554,6 +1603,20 @@ h1 {
 
   .privacy-hero {
     padding: 64px 0 50px;
+  }
+
+  .privacy-header {
+    min-height: 0;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 0;
+  }
+
+  .policy-page-nav {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0 16px;
   }
 
   .privacy-toc {
